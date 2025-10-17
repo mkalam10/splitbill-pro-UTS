@@ -1,4 +1,3 @@
-
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -15,8 +14,26 @@ const app = express();
 // Body parser
 app.use(express.json());
 
-// Enable CORS
-app.use(cors());
+// Enable CORS with options for Vercel deployment
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like Postman, mobile apps, or file-based local testing)
+    if (!origin) return callback(null, true);
+
+    // Regular expression to match localhost with any port
+    const localhostRegex = /^http:\/\/localhost(:\d+)?$/;
+
+    // Allow all Vercel domains and localhost for development
+    const allowed = origin.endsWith('.vercel.app') || localhostRegex.test(origin);
+    
+    if (allowed) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
 
 // Mount routers
 app.use('/api/auth', require('./routes/auth.routes'));

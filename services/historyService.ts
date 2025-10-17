@@ -1,8 +1,8 @@
-
 import { Bill } from '../types';
 import { getToken } from './authService';
+import { API_BASE_URL } from './api';
 
-const API_URL = 'http://localhost:5000/api/bills';
+const API_URL = `${API_BASE_URL}/api/bills`;
 
 export const getBills = async (): Promise<Bill[]> => {
     const token = getToken();

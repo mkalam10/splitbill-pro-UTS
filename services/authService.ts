@@ -1,7 +1,7 @@
-
 import { User } from '../types';
+import { API_BASE_URL } from './api';
 
-const API_URL = 'http://localhost:5000/api/auth'; // Ganti jika backend Anda di-deploy di tempat lain
+const API_URL = `${API_BASE_URL}/api/auth`; // Ganti jika backend Anda di-deploy di tempat lain
 const SESSION_KEY = 'splitbill_pro_session';
 
 interface AuthResponse {
